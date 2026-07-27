@@ -24,19 +24,19 @@ A Next.js UI talks to a FastAPI backend bound to localhost, which is the only co
 
 ```mermaid
 flowchart TD
-    UI[Next.js UI] --> API[FastAPI backend]
-    API --> LLM[LLM provider protocol]
-    API --> STAGED[Staged design pipeline]
-    API --> LOOP[Expert agent loop]
-    STAGED --> EC[Engineering computer<br/>deterministic + cited]
-    EC --> PV{Plan validation}
+    UI["Next.js UI"] --> API["FastAPI backend"]
+    API --> LLM["LLM provider protocol"]
+    API --> STAGED["Staged design pipeline"]
+    API --> LOOP["Expert agent loop"]
+    STAGED --> EC["Engineering computer<br/>deterministic and cited"]
+    EC --> PV{"Plan validation"}
     PV -->|rejected| STAGED
-    PV -->|approved| GEX[Geometry executor]
+    PV -->|approved| GEX["Geometry executor"]
     LOOP --> ADAPT
-    GEX --> ADAPT[CAD adapter protocol]
-    ADAPT --> COM[STA COM worker thread<br/>timeout / poison / restart]
-    COM --> SW[SolidWorks]
-    COM --> VER[Verification<br/>mass properties + feature checks]
+    GEX --> ADAPT["CAD adapter protocol"]
+    ADAPT --> COM["STA COM worker thread<br/>timeout, poison, restart"]
+    COM --> SW["SolidWorks"]
+    COM --> VER["Verification<br/>mass properties, feature checks"]
 ```
 
 ## Stack
