@@ -4,7 +4,7 @@ Getting an LLM to emit SolidWorks API calls is the easy part — knowing whether
 
 **Live:** [intentcadx.com](https://intentcadx.com)
 
-![IntentCADX Studio — natural-language part description on the right, live parametric model in the viewport](docs/studio.png)
+![IntentCADX — describe a part in plain English, get a parametric model back](docs/hero.png)
 
 ## Highlights
 
@@ -17,6 +17,16 @@ Getting an LLM to emit SolidWorks API calls is the easy part — knowing whether
 - **The engineering report makes zero LLM calls.** Material resolution, DFM checks, fastener standards, cantilever bending, Marin-modified endurance limits and ISO 281 bearing life are all computed deterministically and carry explicit citations (Shigley §3-3, §5-1, §6-7, §8-7). Every number in the report traces to a formula, not to a generation. → [`highlights/engineering_computer.py`](highlights/engineering_computer.py)
 
 - **1,423 unit tests pass with no SolidWorks installed.** The CAD adapter sits behind a protocol, so the whole pipeline runs against mocks — the suite executes in ~123 s on a machine that has never had a CAD licence.
+
+## Screens
+
+**Studio** — the part description goes in as plain English on the right; the resulting parametric solid is in the viewport, with export and a live connection indicator along the bottom. Generation runs against a locally-hosted backend, so the public build sits in preview mode with generation disabled.
+
+![IntentCADX Studio with a generated L-bracket in the viewport and the natural-language prompt panel on the right](docs/studio.png)
+
+**The pipeline, end to end** — plan, write, execute, verify, export, with the parameters that came out of the description exposed as live values rather than baked into the geometry.
+
+![Product page illustrating the plan-write-execute-verify-export pipeline alongside a parameter panel](docs/pipeline.png)
 
 ## Architecture
 
