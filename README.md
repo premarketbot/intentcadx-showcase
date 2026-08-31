@@ -6,6 +6,22 @@ Getting an LLM to emit SolidWorks API calls is the easy part — knowing whether
 
 ![IntentCADX — describe a part in plain English, get a parametric model back](docs/hero.png)
 
+## Download
+
+The Windows alpha is on the [Releases](../../releases) tab.
+
+You need:
+
+- Windows 10 or 11.
+- SolidWorks installed. Start it before you ask for geometry.
+- Your own [Anthropic API key](https://console.anthropic.com/settings/keys), on an account with credit. IntentCADX does not include API access and does not bill you. You pay Anthropic directly for what you use.
+
+Unzip the whole folder and run `intentcad.exe` from inside it. Do not move the .exe out of the folder.
+
+This is an unsigned alpha, so Windows SmartScreen warns you on first run. Click **More info**, then **Run anyway**.
+
+Full steps and troubleshooting are in [INSTALL.md](INSTALL.md).
+
 ## Highlights
 
 - **Single-threaded COM marshalling with timeout and poison recovery.** SolidWorks' `SldWorks.Application` is an STA COM server — every call must come from the thread that initialized that apartment, and when a request crosses threads pywin32 silently hands back degraded `<unknown>` proxies whose members fail. Every COM operation is funnelled through one dedicated worker thread with a queue/Future interface. A stuck modal dialog or COM deadlock can hang an STA call forever, and Python threads can't be force-killed — so a timed-out worker is marked *poisoned*, left blocked as a daemon, and transparently replaced on next use. This is the substrate that lets an async web backend drive a single-threaded desktop application safely. → [`highlights/com_thread.py`](highlights/com_thread.py)
@@ -16,11 +32,11 @@ Getting an LLM to emit SolidWorks API calls is the easy part — knowing whether
 
 - **The engineering report makes zero LLM calls.** Material resolution, DFM checks, fastener standards, cantilever bending, Marin-modified endurance limits and ISO 281 bearing life are all computed deterministically and carry explicit citations (Shigley §3-3, §5-1, §6-7, §8-7). Every number in the report traces to a formula, not to a generation. → [`highlights/engineering_computer.py`](highlights/engineering_computer.py)
 
-- **1,423 unit tests pass with no SolidWorks installed.** The CAD adapter sits behind a protocol, so the whole pipeline runs against mocks — the suite executes in ~123 s on a machine that has never had a CAD licence.
+- **1,559 unit tests pass with no SolidWorks installed.** The CAD adapter sits behind a protocol, so the whole pipeline runs against mocks — the suite executes in ~240 s on a machine that has never had a CAD licence.
 
 ## Screens
 
-**Studio** — the part description goes in as plain English on the right; the resulting parametric solid is in the viewport, with export and a live connection indicator along the bottom. Generation runs against a locally-hosted backend, so the public build sits in preview mode with generation disabled.
+**Studio** — the part description goes in as plain English on the right; the resulting parametric solid is in the viewport, with export and a live connection indicator along the bottom. Generation runs against a backend on your own machine, using your own Anthropic API key.
 
 ![IntentCADX Studio with a generated L-bracket in the viewport and the natural-language prompt panel on the right](docs/studio.png)
 
