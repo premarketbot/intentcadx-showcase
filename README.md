@@ -14,9 +14,15 @@ You need:
 
 - Windows 10 or 11.
 - SolidWorks installed. Start it before you ask for geometry.
-- Your own [Anthropic API key](https://console.anthropic.com/settings/keys), on an account with credit. IntentCADX does not include API access and does not bill you. You pay Anthropic directly for what you use.
+- An API key. Either works:
+  - **Free** — a key from [openrouter.ai/keys](https://openrouter.ai/keys). IntentCADX uses free models only and refuses to send a request to a paid one, so a key with no credit on it cannot be billed. This costs nothing.
+  - **Anthropic** — your own [Anthropic key](https://console.anthropic.com/settings/keys) on an account with credit. Materially better at multi-step geometry. You pay Anthropic directly for what you use.
 
-Unzip the whole folder and run `intentcad.exe` from inside it. Do not move the .exe out of the folder.
+  IntentCADX does not include API access and does not bill you either way.
+
+Before unzipping, **right-click the .zip, choose Properties, tick Unblock, and click OK.** Windows tags downloaded files and File Explorer copies that tag onto everything it extracts, which stops the app opening its window. IntentCADX clears the tag itself on startup, so this is belt and braces — but it takes two seconds and removes the whole class of problem.
+
+Then unzip the whole folder and run `intentcad.exe` from inside it. Do not move the .exe out of the folder.
 
 This is an unsigned alpha, so Windows SmartScreen warns you on first run. Click **More info**, then **Run anyway**.
 
@@ -32,11 +38,11 @@ Full steps and troubleshooting are in [INSTALL.md](INSTALL.md).
 
 - **The engineering report makes zero LLM calls.** Material resolution, DFM checks, fastener standards, cantilever bending, Marin-modified endurance limits and ISO 281 bearing life are all computed deterministically and carry explicit citations (Shigley §3-3, §5-1, §6-7, §8-7). Every number in the report traces to a formula, not to a generation. → [`highlights/engineering_computer.py`](highlights/engineering_computer.py)
 
-- **1,559 unit tests pass with no SolidWorks installed.** The CAD adapter sits behind a protocol, so the whole pipeline runs against mocks — the suite executes in ~240 s on a machine that has never had a CAD licence.
+- **1,609 unit tests pass with no SolidWorks installed.** The CAD adapter sits behind a protocol, so the whole pipeline runs against mocks — the suite executes in about two minutes on a machine that has never had a CAD licence.
 
 ## Screens
 
-**Studio** — the part description goes in as plain English on the right; the resulting parametric solid is in the viewport, with export and a live connection indicator along the bottom. Generation runs against a backend on your own machine, using your own Anthropic API key.
+**Studio** — the part description goes in as plain English on the right; the resulting parametric solid is in the viewport, with export and a live connection indicator along the bottom. Generation runs against a backend on your own machine, using your own API key.
 
 ![IntentCADX Studio with a generated L-bracket in the viewport and the natural-language prompt panel on the right](docs/studio.png)
 
